@@ -70,15 +70,53 @@
       <img src="{% static 'img/icons/header-icon-04.svg' %}" alt="">
    </a>
 </li>
-
+{% if request.user.is_authenticated %}
 <!-- User Menu -->
+<li class="nav-item dropdown has-arrow new-user-menus">
+   <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+      <span class="user-img">
+         <img class="rounded-circle" src="{{request.user.avatar.url}}" width="31" alt="Ryan Taylor">
+         <div class="user-text">
+            <h6>{{request.user.name}}</h6>
+            <p class="text-muted mb-0">
+               {% if request.user.role == 1 %}
+               Recruiter
+           {% else %}
+               Candidate
+           {% endif %}</p>
+         </div>
+      </span>
+   </a>
+   <div class="dropdown-menu">
+      <div class="user-header">
+         <div class="avatar avatar-sm">
+            <img src="{{request.user.avatar.url}}" alt="User Image" class="avatar-img rounded-circle">
+         </div>
+         <div class="user-text">
+            <h6>{{request.user.name}}</h6>
+            <p class="text-muted mb-0">
+               {% if request.user.role == 1 %}
+        Recruiter
+    {% else %}
+        Candidate
+    {% endif %}
+            </p>
+         </div>
+      </div>
+      <a class="dropdown-item" href="profile.html">My Profile</a>
+      <a class="dropdown-item" href="inbox.html">Inbox</a>
+      <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+   </div>
+</li>
+<!-- /User Menu -->
+{% else %}
 <li class="nav-item dropdown has-arrow new-user-menus">
    <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
       <span class="user-img">
          <img class="rounded-circle" src="{% static 'img/profiles/avatar-01.jpg' %}" width="31" alt="Ryan Taylor">
          <div class="user-text">
-            <h6>Ryan Taylor</h6>
-            <p class="text-muted mb-0">Administrator</p>
+            <h6>login</h6>
+            <p class="text-muted mb-0"></p>
          </div>
       </span>
    </a>
@@ -88,16 +126,15 @@
             <img src="{% static 'img/profiles/avatar-01.jpg' %}" alt="User Image" class="avatar-img rounded-circle">
          </div>
          <div class="user-text">
-            <h6>Ryan Taylor</h6>
-            <p class="text-muted mb-0">Administrator</p>
+            <h6></h6>
+            <p class="text-muted mb-0">
+            </p>
          </div>
       </div>
-      <a class="dropdown-item" href="profile.html">My Profile</a>
-      <a class="dropdown-item" href="inbox.html">Inbox</a>
-      <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+      <a class="dropdown-item" href="{% url 'login' %}">Login</a>
    </div>
 </li>
-<!-- /User Menu -->
+{% endif %}
 
 </ul>
 <!-- /Header Right Menu -->
