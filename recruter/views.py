@@ -43,3 +43,6 @@ def jobcan(request,pk):
    ]
    context = {'datas': datas}
    return render(request, 'recruter/jobcan.html',context)
+
+def login(request):
+   return render(request, 'recruter/login.html')
