@@ -7,8 +7,9 @@ urlpatterns = [
     path('offer', views.offer,name="offer"),
     path('jobcans', views.jobcans,name="jobcans"),
     path('jobcan/<str:pk>/', views.jobcan,name="jobcan"),
-    path('login', views.login,name="login"),
-
+    path('login/', views.loginPage, name="login"),
+    path('logout/', views.logoutUser, name="logout"),
+    path('register/', views.registerPage, name="register"),
 
 ]
     # path('admin/', views.site.urls),

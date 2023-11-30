@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect
 
 from .models import Job,Candidature,User
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.contrib.auth import authenticate, login, logout
+from .forms import MyUserCreationForm
 
 
 def test(request):
@@ -44,5 +49,58 @@ def jobcan(request,pk):
    context = {'datas': datas}
    return render(request, 'recruter/jobcan.html',context)
 
-def login(request):
-   return render(request, 'recruter/login.html')
+def loginPage(request):
+    page = 'login'
+    context = {'page': page}
+
+    if request.user.is_authenticated:
+        return redirect('offer')
+
+    if request.method == 'POST':
+        email = request.POST.get('email').lower()
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(username=email)
+        except:
+            messages.error(request, 'User does not exist')
+            return render(request, 'recruter/login.html', context)
+
+                 # Check if the user's role is not equal to 1
+        if user.role != 1:
+            messages.error(request, 'You do not have permission to login')
+            return render(request, 'recruter/login.html', context)
+        
+        user = authenticate(request, username=email, password=password,role=1)
+
+        if user is not None:
+            login(request, user)
+            return redirect('offer')
+        else:
+            messages.error(request, 'Username OR password does not exit')
+
+    return render(request, 'recruter/login.html', context)
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
+
+
+def registerPage(request):
+    form = MyUserCreationForm()
+
+    if request.method == 'POST':
+        form = MyUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect('offer')
+        else:
+            messages.error(request, 'An error occurred during registration')
+
+    return render(request, 'recruter/login.html', {'form': form})
+
+       
