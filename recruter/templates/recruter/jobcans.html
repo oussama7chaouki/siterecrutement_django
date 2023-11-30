@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="page-wrapper">
+
+    <div class="content container-fluid">
+    {% if jobcans %}    
+        {% for jobcan in jobcans %}
+        <div class="card mx-auto mt-5" style="width:70%">
+            <div class="card-header">
+                {{jobcan.date}}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{jobcan.title}}
+                    {{jobcan.domain}}
+                </h5>
+                <p class="card-text" style="font-size: 0.8em;"> <i class="fa fa-user" aria-hidden="true"></i>
+
+                    {{jobcan.count}} APPLICANT
+                </p>
+                <a href="{% url 'jobcan' jobcan.id %}" class="btn btn-primary">See candidate</a>
+            </div>
+        </div>
+        {% endfor %}
+
+    {% else %}
+        <div class="card mx-auto mt-5" style="width:70%">
+            <div class="card-header">
+                NO Job Posted
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">NO Job Posted</h5>
+                <p class="card-text" style="font-size: 0.8em;">
+                    <a href="../profilrecruter.php" class="btn btn-primary">Go back</a>
+            </div>
+    {% endif %}
+ 
+        </div>
+    </div>
+    {% endblock content %}
