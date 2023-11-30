@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'recruter.apps.RecruterConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
