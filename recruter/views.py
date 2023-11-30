@@ -1,36 +1,38 @@
 from django.shortcuts import render, redirect
 
-from django.http import HttpResponse
-import datetime
+from .models import Job,Candidature,User
 
 
 def test(request):
  return render(request, 'recruter/test.html')
 
 def offer(request):
- offers = [
-    {"id_job": 1, "job_title": "Software Engineer", "domain": "Information Technology", "date": "2023-11-28"},
-    {"id_job": 2, "job_title": "Financial Analyst", "domain": "Finance", "date": "2023-11-25"},
-    {"id_job": 3, "job_title": "Marketing Manscorer", "domain": "Marketing", "date": "2023-11-20"},
-    ]
+ offers=Job.objects.all()
+#  offers = [
+#     {"id": 1, "title": "Software Engineer", "domain": "Information Technology", "date": "2023-11-28"},
+#     {"id": 2, "title": "Financial Analyst", "domain": "Finance", "date": "2023-11-25"},
+#     {"id": 3, "title": "Marketing Manscorer", "domain": "Marketing", "date": "2023-11-20"},
+#     ]
+
  context = {'offers': offers}
  return render(request, 'recruter/jobs.html',context)
 def jobcans(request):
- jobcan=[{
-    "date": "2023-11-29",
-    "title": "Software Engineer",
-    "domain": "Information Technology",
-    "count": 10,
-    "id":1
-  },
-  {
-    "date": "2023-11-30",
-    "title": "Data Analyst",
-    "domain": "Analytics",
-    "count": 5,
-        "id":2
+ jobcans=Job.objects.all()
+#  jobcan=[{
+#     "date": "2023-11-29",
+#     "title": "Software Engineer",
+#     "domain": "Information Technology",
+#     "count": 10,
+#     "id":1
+#   },
+#   {
+#     "date": "2023-11-30",
+#     "title": "Data Analyst",
+#     "domain": "Analytics",
+#     "count": 5,
+#         "id":2
 
-  }]
+#   }]
  context = {'jobcans': jobcan}
  return render(request, 'recruter/jobcans.html',context)
 def jobcan(request,pk):
